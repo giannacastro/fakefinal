@@ -11,6 +11,10 @@ class Kingdom(Enum):
     EUBACTERIA = 3
     ARCHAEA = 4
 
+    @property
+    def phyla(self):
+        return [p.name for p in Phylum if p.value >= (self.value - 1) * 10 + 1 and p.value <= self.value * 10]
+
 class Phylum(Enum):
     CHORDATA = 1
     ARTHROPODA = 2
@@ -43,21 +47,10 @@ class Phylum(Enum):
     SYNERGISTETES = 29
     TM7 = 30
     VERRUCOMICROBIA = 31
-    
+
     @property
-    def kingdom(self):
-        if self in (Phylum.CHORDATA, Phylum.ARTHROPODA, Phylum.MOLLUSCA):
-            return Kingdom.ANIMALIA
-        elif self in (Phylum.CNIDARIA, Phylum.ECHINODERMATA, Phylum.PLATYHELMINTHES):
-            return Kingdom.ANIMALIA
-        elif self in (Phylum.NEMATODA, Phylum.ANNELIDA, Phylum.ARTHROPODA):
-            return Kingdom.ANIMALIA
-        elif self in (Phylum.BACTERIA, Phylum.ACIDOBACTERIA, Phylum.CHLAMYDIAE, Phylum.CHLOROFLEXI, Phylum.CYANOBACTERIA, Phylum.FIRMICUTES, Phylum.FUSOBACTERIA, Phylum.PROTEOBACTERIA, Phylum.SPIROCHAETES, Phylum.SYNERGISTETES, Phylum.TM7, Phylum.VERRUCOMICROBIA):
-            return Kingdom.BACTERIA
-        elif self in (Phylum.ASCOMYCOTA, Phylum.BASIDIOMYCOTA, Phylum.CHYTRIDIOMYCOTA, Phylum.GLOMEROMYCOTA, Phylum.MUCOROMYCOTA, Phylum.ZYGOMYCOTA):
-            return Kingdom.FUNGI
-        elif self in (Phylum.CRENARCHAEOTA, Phylum.EURYARCHAEOTA, Phylum.THAUMARCHAEOTA, Phylum.KORARCHAEOTA, Phylum.NANOARCHAEOTA):
-            return Kingdom.ARCHAEA
+    def classes(self):
+        return [c.name for c in Class if c.value >= (self.value - 1) * 10 + 1 and c.value <= self.value * 10]
 
 class Class(Enum):
     MAMMALIA = 1
@@ -78,64 +71,44 @@ class Class(Enum):
     ADENOPHOREA = 16
     POLYCHAETA = 17
     CLITELLATA = 18
-    INSECTA = 19
-    ARACHNIDA = 20
-    CRUSTACEA = 21
-    MYRIAPODA = 22
-    GASTROPODA = 23
-    BIVALVIA = 24
-    CEPHALOPODA = 25
-    POLYPLACOPHORA = 26
-    SCAPHOPODA = 27
-    ANTHOZOA = 28
-    ASTEROIDEA = 29
-    OPHIUROIDEA = 30
-    ECHINOIDEA = 31
-    HOLOTHUROIDEA = 32
-    CRINOIDEA = 33
-    UROCHORDATA = 34
-    ACIDOBACTERIA_CLASS1 = 35
-    ACTINOBACTERIA_CLASS1 = 36
-    BACTEROIDETES_CLASS1 = 37
-    CHLAMYDIAE_CLASS1 = 38
-    CHLOROBI_CLASS1 = 39
-    CHLOROFLEXI_CLASS1 = 40
-    CYANOBACTERIA_CLASS1 = 41
-    FIRMICUTES_CLASS1 = 42
-    FUSOBACTERIA_CLASS1 = 43
-    PROTEOBACTERIA_CLASS1 = 44
-    SPIROCHAETES_CLASS1 = 45
-    SYNERGISTETES_CLASS1 = 46
-    TM7_CLASS1 = 47
-    VERRUCOMICROBIA_CLASS1 = 48
-    
-    @property
-    def phylum(self):
-        if self in (Class.MAMMALIA, Class.INSECTA):
-            return Phylum.CHORDATA
-        elif self in (Class.GASTROPODA, Class.BIVALVIA, Class.CEPHALOPODA, Class.POLYPLACOPHORA, Class.SCAPHOPODA):
-            return Phylum.MOLLUSCA
-        elif self in (Class.ANTHOZOA, Class.SCYPHOZOA, Class.HYDROZOA, Class.CUBOZOA):
-            return Phylum.CNIDARIA
-        elif self in (Class.ASTEROIDEA, Class.OPHIUROIDEA, Class.ECHINOIDEA, Class.HOLOTHUROIDEA, Class.CRINOIDEA):
-            return Phylum.ECHINODERMATA
-        elif self in (Class.TREMATODA, Class.CESTODA):
-            return Phylum.PLATYHELMINTHES
-        elif self in (Class.SECERNENTEA, Class.ADENOPHOREA):
-            return Phylum.NEMATODA
-        elif self in (Class.POLYCHAETA, Class.CLITELLATA):
-            return Phylum.ANNELIDA
-        elif self in (Class.ARACHNIDA, Class.CRUSTACEA, Class.MYRIAPODA):
-            return Phylum.ARTHROPODA
-        elif self in (Class.ACIDOBACTERIA_CLASS1, Class.ACTINOBACTERIA_CLASS1, Class.BACTEROIDETES_CLASS1, Class.CHLAMYDIAE_CLASS1, Class.CHLOROBI_CLASS1, Class.CHLOROFLEXI_CLASS1, Class.CYANOBACTERIA_CLASS1, Class.FIRMICUTES_CLASS1, Class.FUSOBACTERIA_CLASS1, Class.PROTEOBACTERIA_CLASS1, Class.SPIROCHAETES_CLASS1, Class.SYNERGISTETES_CLASS1, Class.TM7_CLASS1, Class.VERRUCOMICROBIA_CLASS1):
-            return Phylum.BACTERIA
-        elif self in (Class.ASCOMYCOTA, Class.BASIDIOMYCOTA, Class.CHYTRIDIOMYCOTA, Class.GLOMEROMYCOTA, Class.MUCOROMYCOTA, Class.ZYGOMYCOTA):
-            return Phylum.FUNGI
+    ARACHNIDA = 19
+    CRUSTACEA = 20
+    MYRIAPODA = 21
+    GASTROPODA = 22
+    BIVALVIA = 23
+    CEPHALOPODA = 24
+    POLYPLACOPHORA = 25
+    SCAPHOPODA = 26
+    ANTHOZOA = 27
+    ASTEROIDEA = 28
+    OPHIUROIDEA = 29
+    ECHINOIDEA = 30
+    HOLOTHUROIDEA = 31
+    CRINOIDEA = 32
+    UROCHORDATA = 33
+    ACIDOBACTERIA_CLASS1 = 34
+    ACTINOBACTERIA_CLASS1 = 35
+    BACTEROIDETES_CLASS1 = 36
+    CHLAMYDIAE_CLASS1 = 37
+    CHLOROBI_CLASS1 = 38
+    CHLOROFLEXI_CLASS1 = 39
+    CYANOBACTERIA_CLASS1 = 40
+    FIRMICUTES_CLASS1 = 41
+    FUSOBACTERIA_CLASS1 = 42
+    PROTEOBACTERIA_CLASS1 = 43
+    SPIROCHAETES_CLASS1 = 44
+    SYNERGISTETES_CLASS1 = 45
+    TM7_CLASS1 = 46
+    VERRUCOMICROBIA_CLASS1 = 47
 
 def populate_dropdowns():
     kingdom_options = [k.name for k in Kingdom]
-    phylum_options = [p.name for p in Kingdom.ARCHAEA.phylum] if Kingdom.ARCHAEA in Kingdom else ['N/A']
-    class_options = [c.name for c in Phylum.CHORDATA.class_] if Phylum.CHORDATA in Phylum else ['N/A']
-    
+    for kingdom in Kingdom:
+        phyla = Kingdom[kingdom.value].phyla or ['N/A']
+        phylum_dropdown['values'] = phyla
+        for phylum in phyla:
+            classes = Phylum[phylum].classes or ['N/A']
+            class_options = classes or ['N/A']
+
 # Test the code
 populate_dropdowns()
