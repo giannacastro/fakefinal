@@ -27,31 +27,30 @@ class Phylum(Enum):
     PLATYHELMINTHES = 6
     NEMATODA = 7
     ANNELIDA = 8
-    ARTHROPODA = 9
-    BACTERIA = 10
-    ASCOMYCOTA = 11
-    BASIDIOMYCOTA = 12
-    CHYTRIDIOMYCOTA = 13
-    GLOMEROMYCOTA = 14
-    MUCOROMYCOTA = 15
-    ZYGOMYCOTA = 16
-    CRENARCHAEOTA = 17
-    EURYARCHAEOTA = 18
-    THAUMARCHAEOTA = 19
-    KORARCHAEOTA = 20
-    NANOARCHAEOTA = 21
-    ACIDOBACTERIA = 22
-    CHLAMYDIAE = 23
-    CHLOROFLEXI = 24
-    CYANOBACTERIA = 25
-    FIRMICUTES = 26
-    FUSOBACTERIA = 27
-    PROTEOBACTERIA = 28
-    SPIROCHAETES = 29
-    SYNERGISTETES = 30
-    TM7 = 31
-    VERRUCOMICROBIA = 32
-
+    BACTERIA = 9
+    ASCOMYCOTA = 10
+    BASIDIOMYCOTA = 11
+    CHYTRIDIOMYCOTA = 12
+    GLOMEROMYCOTA = 13
+    MUCOROMYCOTA = 14
+    ZYGOMYCOTA = 15
+    CRENARCHAEOTA = 16
+    EURYARCHAEOTA = 17
+    THAUMARCHAEOTA = 18
+    KORARCHAEOTA = 19
+    NANOARCHAEOTA = 20
+    ACIDOBACTERIA = 21
+    CHLAMYDIAE = 22
+    CHLOROFLEXI = 23
+    CYANOBACTERIA = 24
+    FIRMICUTES = 25
+    FUSOBACTERIA = 26
+    PROTEOBACTERIA = 27
+    SPIROCHAETES = 28
+    SYNERGISTETES = 29
+    TM7 = 30
+    VERRUCOMICROBIA = 31
+    
     @property
     def kingdom(self):
         if self in (Phylum.CHORDATA, Phylum.ARTHROPODA, Phylum.MOLLUSCA):
@@ -64,6 +63,8 @@ class Phylum(Enum):
             return Kingdom.BACTERIA
         elif self in (Phylum.ASCOMYCOTA, Phylum.BASIDIOMYCOTA, Phylum.CHYTRIDIOMYCOTA, Phylum.GLOMEROMYCOTA, Phylum.MUCOROMYCOTA, Phylum.ZYGOMYCOTA):
             return Kingdom.FUNGI
+        elif self in (Phylum.CRENARCHAEOTA, Phylum.EURYARCHAEOTA, Phylum.THAUMARCHAEOTA, Phylum.KORARCHAEOTA, Phylum.NANOARCHAEOTA):
+            return Kingdom.ARCHAEA
 
 class Class(Enum):
     MAMMALIA = 1
@@ -114,7 +115,7 @@ class Class(Enum):
     SYNERGISTETES_CLASS1 = 46
     TM7_CLASS1 = 47
     VERRUCOMICROBIA_CLASS1 = 48
-
+    
     @property
     def phylum(self):
         if self in (Class.MAMMALIA, Class.INSECTA):
@@ -137,3 +138,10 @@ class Class(Enum):
             return Phylum.BACTERIA
         elif self in (Class.ASCOMYCOTA, Class.BASIDIOMYCOTA, Class.CHYTRIDIOMYCOTA, Class.GLOMEROMYCOTA, Class.MUCOROMYCOTA, Class.ZYGOMYCOTA):
             return Phylum.FUNGI
+
+def populate_dropdowns():
+    kingdom_options = [k.name for k in Kingdom]
+    phylum_options = [p.name for p in Kingdom[kingdom.value].phyla]
+
+# Test the code
+populate_dropdowns()
