@@ -11,13 +11,6 @@ class Kingdom(Enum):
     EUBACTERIA = 3
     ARCHAEA = 4
 
-    @property
-    def domain(self):
-        if self in (Kingdom.ANIMALIA, Kingdom.FUNGI):
-            return Domain.EUKARYA
-        elif self in (Kingdom.EUBACTERIA, Kingdom.ARCHAEA):
-            return Domain.BACTERIA
-
 class Phylum(Enum):
     CHORDATA = 1
     ARTHROPODA = 2
@@ -141,7 +134,8 @@ class Class(Enum):
 
 def populate_dropdowns():
     kingdom_options = [k.name for k in Kingdom]
-    phylum_options = [p.name for p in Kingdom[kingdom.value].phyla]
-
+    phylum_options = [p.name for p in Kingdom.ARCHAEA.phylum] if Kingdom.ARCHAEA in Kingdom else ['N/A']
+    class_options = [c.name for c in Phylum.CHORDATA.class_] if Phylum.CHORDATA in Phylum else ['N/A']
+    
 # Test the code
 populate_dropdowns()
